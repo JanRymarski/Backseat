@@ -1,9 +1,12 @@
 ---
 import '../styles/global.css';
-interface Props { title?: string; description?: string }
-const { title, description = 'Development diary for Backseat, a music-driven VR taxi ride.' } = Astro.props;
+import type { Bg } from '../lib';
+interface Props { title?: string; description?: string; bg?: Bg; section?: string; reading?: boolean }
+const { title, description = 'Development diary for Backseat, a relaxing music-driven VR taxi ride.', bg = 'station', section, reading = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const pageTitle = title ? `${title} · Backseat devlog` : 'Backseat devlog';
+const pageTitle = title ? `${title} · Backseat` : 'Backseat · devlog';
+const path = Astro.url.pathname.replace(/\/$/, '');
+const isResearch = path.endsWith('/research');
 ---
 <!doctype html>
 <html lang="en">
@@ -11,21 +14,28 @@ const pageTitle = title ? `${title} · Backseat devlog` : 'Backseat devlog';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&family=Libre+Caslon+Display&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href={`${base}/bg/${bg}.jpg`} />
     <link rel="alternate" type="application/rss+xml" title="Backseat devlog" href={`${base}/rss.xml`} />
     <title>{pageTitle}</title>
   </head>
-  <body>
-    <div class="wrap">
-      <header class="site">
-        <a class="logo" href={`${base}/`}>Backseat devlog</a>
-        <nav>
-          <a href={`${base}/`}>Diary</a>
-          <a href={`${base}/research/`}>Research question</a>
-          <a href="https://github.com/JanRymarski/Backseat">GitHub</a>
-        </nav>
-      </header>
-      <main><slot /></main>
-      <footer>Jan Rymarski · Devine passion project 2026</footer>
-    </div>
+  <body class={reading ? 'reading' : ''}>
+    <div class="bg" style={`background-image:url(${base}/bg/${bg}.jpg)`} aria-hidden="true"></div>
+    <header class="top cap">
+      <span>{section ?? <a href={`${base}/`}>Backseat</a>}</span>
+      <nav>
+        <a href={`${base}/`} aria-current={!isResearch && path === base ? 'page' : undefined}>Diary</a>
+        <a href={`${base}/research/`} aria-current={isResearch ? 'page' : undefined}>Research</a>
+        <a href="https://github.com/JanRymarski/Backseat">GitHub</a>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer class="bottom cap">
+      <span>Jan Rymarski</span>
+      <span>Devine passion project — 2Ø26</span>
+      <a href={`${base}/rss.xml`}>RSS</a>
+    </footer>
   </body>
 </html>

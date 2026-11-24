@@ -1,19 +1,27 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { num, fmtDate, backgrounds } from '../../lib';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
-  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+  const posts = (await getCollection('posts')).sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+  return posts.map((post, i) => ({ params: { id: post.id }, props: { post, n: i + 1 } }));
 }
-const { post } = Astro.props;
+const { post, n } = Astro.props;
 const { Content } = await render(post);
+const bg = post.data.bg ?? backgrounds[(n - 1) % backgrounds.length];
 ---
-<Base title={post.data.title} description={post.data.summary}>
-  <article>
-    <time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0, 10)}</time>
+<Base title={post.data.title} description={post.data.summary} bg={bg} section={`Entry ${num(n)}`} reading>
+  <article class="measure">
+    <div class="meta cap">
+      <time datetime={post.data.date.toISOString()}>{fmtDate(post.data.date)}</time>
+      <div class="tags">{post.data.tags.map((t) => <span class="tag">{t}</span>)}</div>
+    </div>
     <h1>{post.data.title}</h1>
-    <div>{post.data.tags.map((t) => <span class="tag">{t}</span>)}</div>
-    <Content />
+    <div class="prose" data-numbered><Content /></div>
   </article>
+  <script>
+    // Number the diary sections Ø1, Ø2… like the deck.
+    document.querySelectorAll('[data-numbered] h2').forEach((h, i) => h.setAttribute('data-n', String(i + 1).padStart(2, '0').replace(/0/g, 'Ø')));
+  </script>
 </Base>

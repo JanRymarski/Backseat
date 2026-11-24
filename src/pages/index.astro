@@ -1,21 +1,39 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { num, fmtDate } from '../lib';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const posts = (await getCollection('posts')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const posts = (await getCollection('posts')).sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+const numbered = posts.map((p, i) => ({ p, n: i + 1 })).reverse();
 ---
-<Base>
-  <h1>Development diary</h1>
-  <p class="muted">Daily notes on building <strong>Backseat</strong>: a VR experience where you ride in the back of a taxi through a minimalist world that changes with the music you pick.</p>
-  <ul class="posts">
-    {posts.map((p) => (
-      <li>
-        <time datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time><br />
-        <a href={`${base}/posts/${p.id}/`}>{p.data.title}</a>
-        {p.data.summary && <div class="muted">{p.data.summary}</div>}
-        <div>{p.data.tags.map((t) => <span class="tag">{t}</span>)}</div>
-      </li>
-    ))}
-  </ul>
+<Base bg="station">
+  <section class="hero">
+    <h1 class="wordmark">BACK<span class="sans">SEAT</span></h1>
+    <div></div>
+    <div class="foot">
+      <div class="year serif">2Ø26</div>
+      <div class="tagline cap">
+        <span>A</span><span>relaxing</span>
+        <span>VR</span><span>game</span>
+        <span>passion</span><span>project</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="diary" class="section measure" style="max-width:62rem">
+    <span class="cap">Ø1 — Development diary</span>
+    <h2 class="serif" style="font-size:clamp(2rem,4vw,3.2rem)">Notes from the back seat.</h2>
+    <p style="max-width:38rem;color:var(--cream-dim)">A daily log of building Backseat: a VR ride in the back of a taxi through a minimalist world that changes with the mood, tempo and lyrics of the music you choose.</p>
+    <ol class="posts">
+      {numbered.map(({ p, n }) => (
+        <li>
+          <a href={`${base}/posts/${p.id}/`}>
+            <span class="cap">{num(n)}</span>
+            <span><span class="t">{p.data.title}</span>{p.data.summary && <span class="s">{p.data.summary}</span>}</span>
+            <time class="cap d" datetime={p.data.date.toISOString()}>{fmtDate(p.data.date)}</time>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
 </Base>

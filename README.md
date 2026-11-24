@@ -14,3 +14,7 @@ npm run dev                                        # preview at http://localhost
 
 Posts live in `src/content/posts/`. The research question page is `src/pages/research.astro`.
 Pushing to `main` rebuilds and deploys the site through GitHub Actions.
+
+## Style
+
+Dreamcore look matching the pitch deck: Libre Caslon Display headings, Hanken Grotesk body, small uppercase captions, Ø-style numbering and blurred moodboard photos (with a shifted "motion ghost") as full-bleed backgrounds in `public/bg/`. A post can pick its background with `bg: dusk | monolith | fog | station` in its frontmatter; otherwise posts cycle through them.

@@ -1,25 +1,36 @@
 ---
 import Base from '../layouts/Base.astro';
+const deliverables = [
+  'A playable VR build',
+  'Music and lyric mood analysis pipeline',
+  'Mood-to-atmosphere system',
+  'At least 3 blended moods',
+  'This development blog',
+  'Public GitHub repository',
+  'Showcase video',
+  'Final presentation',
+];
+const n = (i: number) => String(i + 1).padStart(2, '0').replace(/0/g, 'Ø');
 ---
-<Base title="Research question" description="Research question, customer and deliverables for Backseat.">
-  <h1>Research question</h1>
+<Base title="Research question" description="Research question, customer and deliverables for Backseat." bg="fog" section="Ø2 — Research question">
+  <p class="question serif">How can a song’s audio features and lyrical mood be translated into an abstract, atmospheric VR environment that feels true to the song?</p>
 
-  <h2>The customer</h2>
-  <p>Myself, and music lovers who want to experience a song instead of only hearing it. Later on, artists or labels could use Backseat as a VR music video for a release.</p>
+  <div class="grid2">
+    <div>
+      <span class="cap">Customer</span>
+      <p>Myself, and music lovers who want to experience a song instead of only hearing it. Later, artists or labels could use Backseat as a VR music video.</p>
+    </div>
+    <div>
+      <span class="cap">Core project statement</span>
+      <p>Backseat is a VR experience where you ride in the back of a taxi through a minimalist world built from basic shapes, which transforms with the music you choose. Audio analysis (tempo, energy, key) and lyric sentiment set the mood, and the world responds in real time through ambient colour, lighting, fog, weather, time of day and the shape and movement of the landscape.</p>
+    </div>
+  </div>
 
-  <h2>Core project statement</h2>
-  <p>Backseat is a VR experience where you ride in the back of a taxi through a minimalist world built from basic shapes, which transforms with the music you choose. Audio analysis (tempo, energy, key) and lyric sentiment set the mood, and the world responds in real time through ambient colour, lighting, fog, weather, time of day and the shape and movement of the landscape.</p>
-  <blockquote><strong>Research question:</strong> how can a song's audio features and lyrical mood be translated into an abstract, atmospheric VR environment that feels true to the song?</blockquote>
-
-  <h2>Deliverables</h2>
-  <ul>
-    <li>A playable VR build</li>
-    <li>A music and lyric mood analysis pipeline</li>
-    <li>A mood-to-atmosphere system that drives the world</li>
-    <li>At least 3 moods that blend into each other</li>
-    <li>This development blog</li>
-    <li>A public GitHub repository</li>
-    <li>A showcase video</li>
-    <li>The final presentation</li>
-  </ul>
+  <section class="section">
+    <span class="cap">Deliverables</span>
+    <h2 class="serif" style="font-size:clamp(2rem,4vw,3.2rem)">What I’ll hand in.</h2>
+    <ol class="deliv">
+      {deliverables.map((d, i) => <li><span class="cap">{n(i)}</span>{d}</li>)}
+    </ol>
+  </section>
 </Base>
