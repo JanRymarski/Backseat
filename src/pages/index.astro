@@ -6,7 +6,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const posts = (await getCollection('posts')).sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
 const numbered = posts.map((p, i) => ({ p, n: i + 1 })).reverse();
 ---
-<Base bg="station">
+<Base bg="ring">
   <section class="hero">
     <h1 class="wordmark">BACK<span class="sans">SEAT</span></h1>
     <div></div>

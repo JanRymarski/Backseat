@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import type { Bg } from '../lib';
 interface Props { title?: string; description?: string; bg?: Bg; section?: string; reading?: boolean }
-const { title, description = 'Development diary for Backseat, a relaxing music-driven VR taxi ride.', bg = 'station', section, reading = false } = Astro.props;
+const { title, description = 'Development diary for Backseat, a relaxing music-driven VR taxi ride.', bg = 'ring', section, reading = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const pageTitle = title ? `${title} · Backseat` : 'Backseat · devlog';
 const path = Astro.url.pathname.replace(/\/$/, '');

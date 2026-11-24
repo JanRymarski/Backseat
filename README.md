@@ -17,4 +17,4 @@ Pushing to `main` rebuilds and deploys the site through GitHub Actions.
 
 ## Style
 
-Dreamcore look matching the pitch deck: Libre Caslon Display headings, Hanken Grotesk body, small uppercase captions, Ø-style numbering and blurred moodboard photos (with a shifted "motion ghost") as full-bleed backgrounds in `public/bg/`. A post can pick its background with `bg: dusk | monolith | fog | station` in its frontmatter; otherwise posts cycle through them.
+Dreamcore look matching the pitch deck: Libre Caslon Display headings, Hanken Grotesk body, small uppercase captions, Ø-style numbering and blurred moodboard photos (with a shifted "motion ghost") as full-bleed backgrounds in `public/bg/`. A post can pick its background with `bg: canyon | desert | forest | marsh | tower | ring` in its frontmatter; otherwise posts cycle through them.
